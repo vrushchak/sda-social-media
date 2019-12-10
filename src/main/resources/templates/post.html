@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div class="container" th:fragment="postFragment">
+    <div class="col-md-10">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <section class="post-heading">
+                    <div class="row">
+                        <div class="col-md-11">
+                            <div class="media">
+                                <div class="media-left">
+                                </div>
+                                <div class="media-body">
+                                    <h4 class="media-heading">
+                                        <br>
+                                        <hr>
+                                        <br>
+                                        <span th:text="${post.user.firstName}"></span>
+                                    <span class="media-heading" th:text="${post.user.lastName}">
+                                    </span></h4>
+<!--                                    <span class="anchor-time" th:text="${post.date.format(localDateTime, 'yyyy-MM-dd HH:mm')}"></span>-->
+                                    <span th:text="${#temporals.format(post.date, 'yyyy-MM-dd HH:mm')}"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <a href="#"><i class="glyphicon glyphicon-chevron-down"></i></a>
+                        </div>
+                    </div>
+                </section>
+                <section class="post-body">
+                    <p th:text="${post.content}"></p>
+
+                    <div class="post-footer-option container">
+                        <ul class="list-unstyled">
+                            <a th:href="@{/post/{postId}/like(postId=${post.id})}"><img src="http://www.vectorico.com/download/social_media/Facebook-Like-Button.jpg" alt="" height="42" width="92"></a>
+                            <p th:text="|${post.likes.size()} people liked this post|"></p>
+                            <!--<li><a href="#"><i class="glyphicon glyphicon-thumbs-up"></i> Like</a></li>-->
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="post-footer-comment-wrapper">
+                        <div class="comment-form" th:insert="comment :: commentFragment">
+                        </div>
+                        <div class="comment">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row" th:each="comment : ${post.comments}">
+                       <i><p th:text="${comment.user.firstName} + ' ' + ${comment.user.lastName} + ' commented: ' + ${comment.content}"
+                             style="font-size:80%; color:grey;"></i></p>
+                    </div>
+                </section>
+                <section class="post-footer">
+
+
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
